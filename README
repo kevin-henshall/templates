@@ -1,0 +1,5 @@
+templates is a build framework front-end script designed to get projects up and 
+running quickly by using an existing set of templates to provide a starting 
+point. It aims to reduce the initial work required when setting up a project 
+and allows you to get working on the actual project rather than building up a 
+framework from scrath for each new project.
