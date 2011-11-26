@@ -1,0 +1,8 @@
+This directory contains the available templates. Each template directory must 
+contain an executable script named "install.sh" which accepts a single 
+command-line argument specifying the installation location as follows:
+
+install.sh -l install_location
+
+Each template should also include a file named "README" which will be displayed 
+by templates.sh (unless running in quiet mode)
