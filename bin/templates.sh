@@ -61,11 +61,31 @@ then
     error "Unknow project template type '${FLAGS_type}'"
 fi
 
-# ensure that target project location exists and is writable
-if [[ ! -d ${FLAGS_location} || ! -w ${FLAGS_location} ]]
+# check if ${FLAGS_location} already exists
+if [[ ! -d ${FLAGS_location} ]]
 then
-    error "Target project install directory location does not exist or is not \
-writable"
+    # create ${FLAGS_location}
+    mkdir -p ${FLAGS_location}
+    return_code=$?
+    if [[ ${return_code} != 0 ]]
+    then
+        error "Unable to create directory ${FLAGS_location}. Please ensure \
+that the appropriate write permissions have been set"
+    fi
+else
+    # check if ${FLAGS_location} is non-empty
+    directory_listing_count=`ls -1 ${FLAGS_location} | wc -l`
+    if [[ directory_listing_count != 0 ]]
+    then
+        read -p "Warning: ${FLAGS_location} is not empty. Are you sure you \
+wish to install to this location? (y/n) " input
+        # if the user did not type one of 'y' or 'Y'
+        if [[ ! (${input} == "y" || ${input} == "Y") ]]
+        then
+            error "Please specify a different installation directory or allow \
+for the installation to proceed to the non-empty directory"
+        fi
+    fi
 fi
 
 # ensure that the ${TEMPLATES_INSTALL_SCRIPT} exists within 
